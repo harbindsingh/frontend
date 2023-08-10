@@ -1,0 +1,31 @@
+# This is an appspec.yml template file for use with an EC2/On-Premises deployment in CodeDeploy.
+
+version: 0.0
+os: linux
+
+files:
+  - source: /
+    destination: /var/www/html/iNodeRackAuditFrontend
+
+permissions:
+  - object: /
+    pattern: "**"
+    owner: Ubuntu:www-data
+    group: Ubuntu:www-data
+
+hooks:
+
+  BeforeInstall:
+    - location: /before_install.sh
+      timeout: 300
+      runas: root
+  
+  AfterInstall:
+    - location: /after_install.sh
+      timeout: 300
+      runas: root
+
+  ApplicationStart:
+    - location: /app_start.sh
+      timeout: 300
+      runas: root
